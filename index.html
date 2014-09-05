@@ -4,7 +4,7 @@
     
     </head>
     <body>
-        <canvas id="duk" width="500" height="400" onmousemove="mouseHandler(event)"></canvas>
+        <canvas style="cursor: none;" id="duk" width="500" height="400" onmousemove="mouseHandler(event)"></canvas>
         <script>
             var c = document.getElementById("duk");
             var ctx = c.getContext("2d");
@@ -16,11 +16,12 @@
                 ctx.beginPath();
                 ctx.arc(x, y, 20, 0, 2*Math.PI);
                 ctx.fill();
-                // Kropp
-                ctx.fillRect(x-10, y+15, 20, 80);
+            } function Pong(y) {
+                // Pong1
+                ctx.beginPath;
+                ctx.fillRect(390, y, 10, 100);
             }
             function mouseHandler(event) {
-                xMouse = event.clientX;
                 yMouse = event.clientY;
             }
             function repaint() {
@@ -29,8 +30,7 @@
                 // Måla gubbe
                 paintMan(xMan, yMan);
                 
-               // Måla gubbe
-                paintMan(xMouse, yMouse);
+                Pong(yMouse);
                 
                 // Flytta gubbe
                 xMan = xMan + vxMan;
@@ -42,11 +42,11 @@
                 if(yMan - 20 < 0){
                     vyMan = 2;
                 }
-                if(xMan  + 20 > 500){
-                    vxMan = -1;
-                }
                 if(xMan - 20 < 0){
                     vxMan = 1;
+                }
+                if(xMan == 370 && yMan > yMouse  + 20 || yMan < yMouse && xMan == 370) {
+                    vxMan = -1;
                 }
             }
             
