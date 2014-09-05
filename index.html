@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    
+    </head>
+    <body>
+        <canvas id="duk" width="500" height="400" onmousemove="mouseHandler(event)"></canvas>
+        <script>
+            var c = document.getElementById("duk");
+            var ctx = c.getContext("2d");
+            var xMan = 100, yMan = 200, vxMan = 1, vyMan = 2;
+            var xMouse = 0, yMouse = 0;
+            
+            function paintMan(x, y) {
+                // Huvud
+                ctx.beginPath();
+                ctx.arc(x, y, 20, 0, 2*Math.PI);
+                ctx.fill();
+                // Kropp
+                ctx.fillRect(x-10, y+15, 20, 80);
+            }
+            function mouseHandler(event) {
+                xMouse = event.clientX;
+                yMouse = event.clientY;
+            }
+            function repaint() {
+                // Sudda gubbe
+                ctx.clearRect(0, 0, 500, 400);
+                // Måla gubbe
+                paintMan(xMan, yMan);
+                
+               // Måla gubbe
+                paintMan(xMouse, yMouse);
+                
+                // Flytta gubbe
+                xMan = xMan + vxMan;
+                yMan = yMan + vyMan;
+                
+                if(yMan + 100 > 400){
+                    vyMan = -2;
+                }
+                if(yMan - 20 < 0){
+                    vyMan = 2;
+                }
+                if(xMan  + 20 > 500){
+                    vxMan = -1;
+                }
+                if(xMan - 20 < 0){
+                    vxMan = 1;
+                }
+            }
+            
+            // Kallar på rapaint 50 ggr i sekunden
+            window.setInterval(repaint, 20);
+            
+            
+        </script>
+    </body>
+</html>
