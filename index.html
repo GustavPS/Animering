@@ -4,23 +4,32 @@
     
     </head>
     <body>
-        <canvas style="cursor: none;" id="duk" width="500" height="400" onmousemove="mouseHandler(event)"></canvas>
+        <div id="score" style="position:relative; left: 503px; top: 383px;"></div>
+        
+        <canvas style="cursor: none; border: 1px solid black; position:relative; top: -20px;" id="duk" width="500" height="400" onmousemove="mouseHandler(event)"></canvas>
         <script>
             var c = document.getElementById("duk");
             var ctx = c.getContext("2d");
-            var xMan = 100, yMan = 200, vxMan = 1, vyMan = 2;
+            var xMan = 100, yMan = 200, vxMan = 2, vyMan = 3;
             var xMouse = 0, yMouse = 0;
+            var point = 0;
             
+            document.getElementById('score').innerHTML = point;
+            var hard = prompt("Svårighetsgrad 1-20   1 = Svårast 20 = Lättast");
+
+            
+            if(hard < 21) {
             function paintMan(x, y) {
                 // Huvud
                 ctx.beginPath();
-                ctx.arc(x, y, 20, 0, 2*Math.PI);
+                ctx.arc(x, y, 10, 0, 2*Math.PI);
                 ctx.fill();
             } function Pong(y) {
                 // Pong1
                 ctx.beginPath;
                 ctx.fillRect(390, y, 10, 100);
             }
+            // Mus
             function mouseHandler(event) {
                 yMouse = event.clientY;
             }
@@ -36,24 +45,39 @@
                 xMan = xMan + vxMan;
                 yMan = yMan + vyMan;
                 
-                if(yMan + 100 > 400){
-                    vyMan = -2;
+                if(yMan + 10 > 400){
+                    vyMan = vyMan - vyMan - vyMan;
                 }
-                if(yMan - 20 < 0){
-                    vyMan = 2;
+                if(yMan - 10 < 0){
+                    vyMan = vyMan - vyMan - vyMan;
                 }
-                if(xMan - 20 < 0){
-                    vxMan = 1;
+                if(xMan - 10 < 0){
+                    vxMan = vxMan - vxMan - vxMan;
                 }
-                if(xMan == 370 && yMan > yMouse  + 20 || yMan < yMouse && xMan == 370) {
-                    vxMan = -1;
+                if(xMan == 380 && yMan > yMouse  + 10 && yMan < yMouse + 100 || yMan > yMouse - 10 && yMan < yMouse -10 && xMan == 380) {
+                    vxMan = vxMan - vxMan - vxMan;
+                    point = point + 1;
+                    document.getElementById('score').innerHTML = point;
                 }
+                if(xMan > 500) {
+                    xMan = 100;
+                    if(point < 1) {
+                        point = point - 1;
+                        document.getElementById('score').innerHTML = point;
+                    } else {
+                        point = 0;
+                        document.getElementById('score').innerHTML = point;
+                    }
+                }
+            }        
+            } else {
+                hard = prompt("Skriv ett nummer mellan 1 och 20")
             }
-            
-            // Kallar på rapaint 50 ggr i sekunden
-            window.setInterval(repaint, 20);
-            
-            
+            // Kallar på repaint 50 ggr i sekunden
+            window.setInterval(repaint, hard);
         </script>
+        
+        
+        
     </body>
 </html>
